@@ -1,0 +1,14 @@
+Day 1–2
+    Setup Express server
+    Connect MongoDB
+    Create Student model
+Day 3
+    CRUD students (no auth yet)
+Day 4
+    Add login (Teacher only)
+Day 5
+    Add Student login
+Day 6
+    Add subjects + grades
+Day 7
+    Build frontend (basic only)
