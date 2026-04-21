@@ -1,7 +1,45 @@
 Day 1–2
     Setup Express server
     Connect MongoDB
-    Create Student model
+    Create Student, Teacher, and Subject model
+        - _id
+        - Name
+        - Age
+        - Course
+        - Year
+        - Username
+        - Password
+        - Role (student / teacher)
+        - Active (true / false)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 Day 3
     CRUD students (no auth yet)
 Day 4
