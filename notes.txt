@@ -11,37 +11,14 @@ Day 1–2
         - Password
         - Role (student / teacher)
         - Active (true / false)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     
 Day 3
     CRUD students (no auth yet)
+    
+    Current status: Day 3 - Create done, need Read/Update/Delete
+    Next step: Test POST /api/students in Postman
+    Stack: Node + Express + MongoDB
+    
 Day 4
     Add login (Teacher only)
 Day 5

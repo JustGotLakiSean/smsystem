@@ -11,7 +11,7 @@ exports.createStudent = async (req, res) => {
         }
 
         // Check if username already exists
-        const existingUser = await Student.findOneAnd({ username });
+        const existingUser = await Student.findOne({ username });
         if (existingUser) {
             return res.status(400).json({ message: "Username already exists" });
         }
