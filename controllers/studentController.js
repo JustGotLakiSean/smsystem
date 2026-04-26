@@ -1,6 +1,7 @@
 const Student = require("../models/Students");
 const bcrypt = require("bcrypt");
 
+// POST method
 exports.createStudent = async (req, res) => {
     try {
         const { name, age, course, year, username, password } = req.body;
@@ -37,6 +38,41 @@ exports.createStudent = async (req, res) => {
             message: "Student created successfully",
             data: savedStudent
         });
+
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message })
+    }
+}
+
+// get all student
+exports.readStudent = async (req, res) => {
+    try {
+
+        const students = await Student.find().select("-password"); // retrieve all student with find() and nothing inside
+
+        res.status(200).json({
+            message: "Student retrieved successfully",
+            data: students
+        })
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message })
+    }
+}
+
+// get one student
+exports.readOneStudent = async (req, res) => {
+    try {
+        const student = await Student.findById(req.params.id).select("-password");
+
+        if(!student) {
+            return res.status(404).json({ message: "Student not found" })
+        }
+
+        res.status(200).json({
+            message: "Student retrieved successfully",
+            data: student
+        })
+
 
     } catch (error) {
         res.status(500).json({ message: "Server error", error: error.message })
