@@ -78,3 +78,74 @@ exports.readOneStudent = async (req, res) => {
         res.status(500).json({ message: "Server error", error: error.message })
     }
 }
+
+// update student
+exports.updateStudent = async (req, res) => {
+    try {
+        const { name, course, year } = req.body;
+
+        const updatedStudent = await Student.findByIdAndUpdate(
+            req.params.id,
+            { name, course, year },
+            { new: true }
+        ).select("-password")
+
+        if(!updatedStudent) {
+            return res.status(404).json({ message: "Student not found" })
+        }
+        
+        res.status(200).json({
+            message: "Update successful",
+            data: updatedStudent
+        })
+
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message})
+    }
+}
+
+// deactivate student - automatically sets active to false; no need for req.body
+exports.deactivateStudent = async (req, res) => {
+    try {
+
+        const deactivateStudent = await Student.findByIdAndUpdate(
+            req.params.id,
+            { active: false },
+            { new: true }
+        ).select("-password")
+
+        if(!deactivateStudent) {
+            return res.status(404).json({ message: "Student not found." })
+        }
+        
+        res.status(200).json({
+            message: "Deactivated student",
+            data: deactivateStudent
+        })
+    } catch (error) {
+        return res.status(500).json({ message: "Server error",  error: error.message })
+    }
+}
+
+// reinstate student
+exports.reinstateStudent = async (req, res) => {
+    try {
+        const reinstateStudent = await Student.findByIdAndUpdate(
+            req.params.id,
+            { active: true },
+            { new: true }
+        ).select("-password")
+
+        if(!reinstateStudent) {
+            return res.status(404).json({ message: "Student not found" })
+        }
+
+        res.status(200).json({
+            message: "Reinstated student",
+            data: reinstateStudent
+        })
+
+    } catch (error) {
+        return res.status(500).json({ message: "Server error", error: error.message })
+    }
+}
