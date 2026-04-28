@@ -9,7 +9,10 @@ app.use(express.json())
 
 // Routes
 const studentRoutes = require("./routes/student");
+const authRoutes = require("./routes/auth")
+
 app.use("/api/students", studentRoutes)
+app.use("/api/auth", authRoutes)
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
