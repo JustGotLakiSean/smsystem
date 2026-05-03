@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const authMiddleware = require("../middleware/authMiddleware")
 
 const { 
     createStudent, 
@@ -10,11 +11,11 @@ const {
     reinstateStudent
 } = require("../controllers/studentController");
 
-router.post("/", createStudent);
-router.get("/", readStudent)
-router.get("/:id", readOneStudent)
-router.put("/:id", updateStudent)
-router.delete("/:id", deactivateStudent)
-router.put("/:id/reinstate", reinstateStudent)
+router.post("/", authMiddleware, createStudent);
+router.get("/", authMiddleware, readStudent)
+router.get("/:id", authMiddleware, readOneStudent)
+router.put("/:id", authMiddleware, updateStudent)
+router.delete("/:id", authMiddleware, deactivateStudent)
+router.put("/:id/reinstate", authMiddleware, reinstateStudent)
 
 module.exports = router;
