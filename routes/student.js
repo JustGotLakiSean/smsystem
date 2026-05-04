@@ -8,7 +8,7 @@ const {
     readOneStudent, 
     updateStudent, 
     deactivateStudent,
-    reinstateStudent
+    reinstateStudent,
 } = require("../controllers/studentController");
 
 router.post("/", authMiddleware, createStudent);
