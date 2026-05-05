@@ -149,3 +149,22 @@ exports.reinstateStudent = async (req, res) => {
         return res.status(500).json({ message: "Server error", error: error.message })
     }
 }
+
+// get data
+exports.getMe = async (req, res) => {
+    try {
+        const student = await Student.findById(req.user.id).select("-password")
+
+        if (!student) {
+        return res.status(404).json({ message: "Student not found" })
+        }
+
+        res.status(200).json({
+        message: "Data retrieved successfully",
+        data: student
+        })
+
+    } catch (error) {
+        return res.status(500).json({ message: "Server error", error: error.message })
+    }
+}

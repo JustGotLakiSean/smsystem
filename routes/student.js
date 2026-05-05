@@ -9,10 +9,12 @@ const {
     updateStudent, 
     deactivateStudent,
     reinstateStudent,
+    getMe
 } = require("../controllers/studentController");
 
 router.post("/", authMiddleware, createStudent);
 router.get("/", authMiddleware, readStudent)
+router.get("/me", authMiddleware, getMe)
 router.get("/:id", authMiddleware, readOneStudent)
 router.put("/:id", authMiddleware, updateStudent)
 router.delete("/:id", authMiddleware, deactivateStudent)
