@@ -1,23 +1,5 @@
-Day 1–2
-    Setup Express server
-    Connect MongoDB
-    Create Student, Teacher, and Subject model
-        - _id
-        - Name
-        - Age
-        - Course
-        - Year
-        - Username
-        - Password
-        - Role (student / teacher)
-        - Active (true / false)
-Day 3
-    CRUD students (no auth yet)
-Day 4
-    Add login (Teacher only)
-Day 5
-    Add Student login
-Day 6
-    Add subjects + grades
-Day 7
-    Build frontend (basic only)
+teacher token
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZjJkMjUzMzQ4Yjc0NTk4NTY2Zjc5YyIsInJvbGUiOiJ0ZWFjaGVyIiwiaWF0IjoxNzc4MDM3OTk3LCJleHAiOjE3NzgxMjQzOTd9.dVemHkQPdsCa5sVg3iQyPI6M0yFw3eHBLBQg9lsdG1U
+
+student token
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZWQzOGE1YTY5NmRjZTFjZDNiMzQ4NSIsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzc4MDM4MDgwLCJleHAiOjE3NzgxMjQ0ODB9.DXdwWVzXgNH0ZSWZht8yIiIV6f3o5D8hnec-8c5Qjfo

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const authMiddleware = require("../middleware/authMiddleware")
+const { authMiddleware, requireRole } = require("../middleware/authMiddleware")
 
 const { 
     createStudent, 
@@ -12,12 +12,12 @@ const {
     getMe
 } = require("../controllers/studentController");
 
-router.post("/", authMiddleware, createStudent);
-router.get("/", authMiddleware, readStudent)
-router.get("/me", authMiddleware, getMe)
-router.get("/:id", authMiddleware, readOneStudent)
-router.put("/:id", authMiddleware, updateStudent)
-router.delete("/:id", authMiddleware, deactivateStudent)
-router.put("/:id/reinstate", authMiddleware, reinstateStudent)
+router.post("/", authMiddleware, requireRole("teacher"), createStudent);
+router.get("/", authMiddleware, requireRole("teacher"), readStudent)
+router.get("/me", authMiddleware, requireRole("student"), getMe)
+router.get("/:id", authMiddleware, requireRole("teacher"), readOneStudent)
+router.put("/:id", authMiddleware, requireRole("teacher"), updateStudent)
+router.delete("/:id", authMiddleware, requireRole("teacher"), deactivateStudent)
+router.put("/:id/reinstate", authMiddleware, requireRole("teacher"), reinstateStudent)
 
 module.exports = router;
