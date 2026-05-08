@@ -1,4 +1,5 @@
 const Student = require("../models/Students");
+const Subject = require("../models/Subject")
 const bcrypt = require("bcrypt");
 
 // POST method
@@ -21,6 +22,15 @@ exports.createStudent = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
+        // Fetch all subjects
+        const subjects = await Subject.find()
+
+        // Map subject to correct format
+        const subjectList = subjects.map(subject => ({
+            subject: subject._id,
+            grade: null
+        }))
+
         // Create student
         const student = new Student({
             name,
@@ -29,14 +39,15 @@ exports.createStudent = async (req, res) => {
             year,
             username,
             password: hashedPassword,
-            subjects: []
+            subjects: subjectList
         });
 
         const savedStudent = await student.save();
+        const { password: _, ...studentData } = savedStudent.toObject()
 
         res.status(201).json({
             message: "Student created successfully",
-            data: savedStudent
+            data: studentData
         });
 
     } catch (error) {
@@ -48,7 +59,9 @@ exports.createStudent = async (req, res) => {
 exports.readStudent = async (req, res) => {
     try {
 
-        const students = await Student.find().select("-password"); // retrieve all student with find() and nothing inside
+        const students = await Student.find()
+            .select("-password") // retrieve all student with find() and nothing inside
+            .populate("subjects.subject")            
 
         res.status(200).json({
             message: "Student retrieved successfully",
@@ -62,7 +75,9 @@ exports.readStudent = async (req, res) => {
 // get one student
 exports.readOneStudent = async (req, res) => {
     try {
-        const student = await Student.findById(req.params.id).select("-password");
+        const student = await Student.findById(req.params.id)
+            .select("-password")
+            .populate("subjects.subject")
 
         if(!student) {
             return res.status(404).json({ message: "Student not found" })
@@ -153,7 +168,9 @@ exports.reinstateStudent = async (req, res) => {
 // get data
 exports.getMe = async (req, res) => {
     try {
-        const student = await Student.findById(req.user.id).select("-password")
+        const student = await Student.findById(req.user.id)
+            .select("-password")
+            .populate("subjects.subject")
 
         if (!student) {
         return res.status(404).json({ message: "Student not found" })
