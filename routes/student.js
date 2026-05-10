@@ -9,7 +9,8 @@ const {
     updateStudent, 
     deactivateStudent,
     reinstateStudent,
-    getMe
+    getMe,
+    updateGrade
 } = require("../controllers/studentController");
 
 router.post("/", authMiddleware, requireRole("teacher"), createStudent);
@@ -19,5 +20,6 @@ router.get("/:id", authMiddleware, requireRole("teacher"), readOneStudent)
 router.put("/:id", authMiddleware, requireRole("teacher"), updateStudent)
 router.delete("/:id", authMiddleware, requireRole("teacher"), deactivateStudent)
 router.put("/:id/reinstate", authMiddleware, requireRole("teacher"), reinstateStudent)
+router.put("/:id/grades", authMiddleware, requireRole("teacher"), updateGrade)
 
 module.exports = router;

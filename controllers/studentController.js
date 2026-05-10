@@ -173,14 +173,46 @@ exports.getMe = async (req, res) => {
             .populate("subjects.subject")
 
         if (!student) {
-        return res.status(404).json({ message: "Student not found" })
+            return res.status(404).json({ message: "Student not found" })
         }
 
         res.status(200).json({
-        message: "Data retrieved successfully",
-        data: student
+            message: "Data retrieved successfully",
+            data: student
         })
 
+    } catch (error) {
+        return res.status(500).json({ message: "Server error", error: error.message })
+    }
+}
+
+// update grades
+exports.updateGrade = async (req, res) => {
+    try {
+
+        const { grades } = req.body;
+        const student = await Student.findById(req.params.id).select("-password")
+
+        if(!student) {
+            return res.status(404).json({ message: "Student not found" })
+        }
+
+        for(const item of grades) {
+            await Student.updateOne(
+                { _id: student._id },
+                { $set: { "subjects.$[elem].grade": item.grade } },
+                { arrayFilters: [{ "elem.subject": item.subjectId }] }
+            )
+        }
+
+        const updatedGrades = await Student.findById(req.params.id)
+            .select("-password")
+            .populate("subjects.subject")
+
+        res.status(200).json({
+            message: "Grades updated",
+            data: updatedGrades
+        })
     } catch (error) {
         return res.status(500).json({ message: "Server error", error: error.message })
     }
