@@ -6,6 +6,8 @@ const port = 3000
 
 // Middleware
 app.use(express.json())
+const path = require('path')
+app.use(express.static(path.join(__dirname, 'frontend')))
 
 // Routes
 const studentRoutes = require("./routes/student");
